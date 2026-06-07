@@ -1,0 +1,193 @@
+@model DisasterEye.Web.Models.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+
+    var statusLabels = "";
+    var statusValores = "";
+
+    if (Model?.UltimosCadastros != null)
+    {
+        var grupos = Model.UltimosCadastros
+            .GroupBy(t => t.Status)
+            .Select(g => new { status = g.Key, count = g.Count() })
+            .ToList();
+
+        statusLabels = string.Join(",", grupos.Select(g => $"'{g.status}'"));
+        statusValores = string.Join(",", grupos.Select(g => g.count));
+    }
+}
+
+<div class="de-dashboard">
+
+    <!-- Cards de Métricas -->
+    <div class="de-cards-grid">
+        <div class="de-card de-card--blue">
+            <div class="de-card-icon"><i class="bi bi-cpu"></i></div>
+            <div class="de-card-body">
+                <div class="de-card-value">@(Model?.TotalTecnologias ?? 0)</div>
+                <div class="de-card-label">Tecnologias Mapeadas</div>
+            </div>
+            <div class="de-card-glow"></div>
+        </div>
+        <div class="de-card de-card--green">
+            <div class="de-card-icon"><i class="bi bi-rocket-takeoff"></i></div>
+            <div class="de-card-body">
+                <div class="de-card-value">@(Model?.TotalMissoesMapeadas ?? 0)</div>
+                <div class="de-card-label">Missões Espaciais</div>
+            </div>
+            <div class="de-card-glow"></div>
+        </div>
+        <div class="de-card de-card--orange">
+            <div class="de-card-icon"><i class="bi bi-globe-americas"></i></div>
+            <div class="de-card-body">
+                <div class="de-card-value">@(Model?.TotalSetoresBeneficiados ?? 0)</div>
+                <div class="de-card-label">Setores Beneficiados</div>
+            </div>
+            <div class="de-card-glow"></div>
+        </div>
+        <div class="de-card de-card--red">
+            <div class="de-card-icon"><i class="bi bi-exclamation-triangle"></i></div>
+            <div class="de-card-body">
+                <div class="de-card-value">
+                    @{
+                        int alertas = 0;
+                        if (Model?.UltimosCadastros != null)
+                        {
+                            alertas = Model.UltimosCadastros
+                            .Count(t => t.Status == "Alerta" || t.Status == "Crítico");
+                        }
+                    }
+                    @alertas
+                </div>
+                <div class="de-card-label">Alertas Ativos</div>
+            </div>
+            <div class="de-card-glow"></div>
+        </div>
+    </div>
+
+    <!-- Gráficos -->
+    <div class="de-grid-two">
+
+        <!-- Barras de Progresso por Categoria -->
+        <div class="de-panel">
+            <div class="de-panel-header">
+                <i class="bi bi-bar-chart-line"></i> Heranças Tecnológicas por Setor
+            </div>
+            <div class="de-panel-body">
+                @if (Model?.ContagemPorCategoria != null && Model.ContagemPorCategoria.Any())
+                {
+                    var max = Model.ContagemPorCategoria.Max(c => c.Quantidade);
+                    foreach (var item in Model.ContagemPorCategoria)
+                    {
+                        var pct = max > 0 ? (item.Quantidade * 100 / max) : 0;
+                        <div class="de-bar-item">
+                            <div class="de-bar-label">@item.Categoria</div>
+                            <div class="de-bar-track">
+                                <div class="de-bar-fill" style="width:@pct%">
+                                    <span class="de-bar-count">@item.Quantidade</span>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+                else
+                {
+                    <div class="de-empty">Nenhum dado disponível.</div>
+                }
+            </div>
+        </div>
+
+        <!-- Gráfico Doughnut de Status -->
+        <div class="de-panel">
+            <div class="de-panel-header">
+                <i class="bi bi-broadcast-pin"></i> Status dos Satélites
+            </div>
+            <div class="de-panel-body d-flex align-items-center justify-content-center">
+                <canvas id="statusChart" height="220"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Tabela responsiva de Últimos Cadastros -->
+    <div class="de-panel mt-4">
+        <div class="de-panel-header">
+            <i class="bi bi-clock-history"></i> Últimos Cadastros
+            <a asp-controller="Tecnologias" asp-action="Index" class="de-btn-sm ms-auto">
+                Ver todos <i class="bi bi-arrow-right"></i>
+            </a>
+        </div>
+        <div class="de-panel-body p-0">
+            <div class="table-responsive">
+                <table class="de-table table mb-0">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Origem Espacial</th>
+                            <th>Categoria</th>
+                            <th>Status</th>
+                            <th>Data</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model?.UltimosCadastros != null && Model.UltimosCadastros.Any())
+                        {
+                            foreach (var t in Model.UltimosCadastros)
+                            {
+                                <tr>
+                                    <td><strong>@t.Nome</strong></td>
+                                    <td><span class="de-badge de-badge--blue">@t.OrigemEspacial</span></td>
+                                    <td>@t.CategoriaNome</td>
+                                    <td><span class="de-status de-status--@t.Status.ToLower()">@t.Status</span></td>
+                                    <td>@t.DataCadastro.ToString("dd/MM/yyyy")</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="5" class="text-center de-empty py-4">
+                                    <i class="bi bi-satellite fs-1 d-block mb-2"></i>
+                                    Nenhuma tecnologia cadastrada ainda.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+    <script>
+        (function () {
+            var labels = [@Html.Raw(statusLabels)];
+            var valores = [@Html.Raw(statusValores)];
+
+            if (labels.length === 0) return;
+
+            new Chart(document.getElementById('statusChart').getContext('2d'), {
+                type: 'doughnut',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        data: valores,
+                        backgroundColor: ['#00d4ff', '#00ff9d', '#ffa500', '#ff4757'],
+                        borderColor: '#0a0e1a',
+                        borderWidth: 3
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: { color: '#a0aec0', font: { family: 'Rajdhani', size: 13 } }
+                        }
+                    }
+                }
+            });
+        })();
+    </script>
+}
