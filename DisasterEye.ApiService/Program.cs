@@ -63,6 +63,8 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(p =>
         p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
 
+
+
 var app = builder.Build();
 
 // ── Migrations automáticas ao iniciar ────────────────────────────
