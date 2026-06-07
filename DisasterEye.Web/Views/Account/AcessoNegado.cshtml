@@ -1,0 +1,13 @@
+@{
+    ViewData["Title"] = "Acesso Negado";
+}
+
+<div class="de-error-page">
+    <div class="de-error-icon"><i class="bi bi-shield-x"></i></div>
+    <h1 class="de-error-code">403</h1>
+    <p class="de-error-msg">Acesso Negado</p>
+    <p class="de-error-sub">Esta rota requer o perfil <strong>Administrador</strong>.</p>
+    <a asp-controller="Home" asp-action="Index" class="de-btn de-btn--primary mt-3">
+        <i class="bi bi-house"></i> Voltar ao Dashboard
+    </a>
+</div>

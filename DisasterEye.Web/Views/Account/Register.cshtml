@@ -1,0 +1,66 @@
+@model DisasterEye.Web.Models.RegisterViewModel
+@{
+    ViewData["Title"] = "Cadastro";
+    Layout = "_AuthLayout";
+}
+
+<div class="de-auth-page">
+    <div class="de-auth-bg"><div class="de-star-field"></div></div>
+    <div class="de-auth-card">
+        <div class="de-auth-logo">
+            <i class="bi bi-broadcast"></i>
+            <div class="de-brand-title">DisasterEye</div>
+            <div class="de-brand-sub">Criar Nova Conta</div>
+        </div>
+
+        <form asp-action="Register" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="de-alert de-alert-danger mb-3"></div>
+
+            <div class="de-form-group">
+                <label asp-for="Nome" class="de-label">Nome Completo</label>
+                <div class="de-input-icon">
+                    <i class="bi bi-person"></i>
+                    <input asp-for="Nome" class="de-input form-control" placeholder="Seu nome" />
+                </div>
+                <span asp-validation-for="Nome" class="de-validation"></span>
+            </div>
+
+            <div class="de-form-group">
+                <label asp-for="Email" class="de-label">E-mail</label>
+                <div class="de-input-icon">
+                    <i class="bi bi-envelope"></i>
+                    <input asp-for="Email" class="de-input form-control" placeholder="seu@email.com" />
+                </div>
+                <span asp-validation-for="Email" class="de-validation"></span>
+            </div>
+
+            <div class="de-form-group">
+                <label asp-for="Senha" class="de-label">Senha</label>
+                <div class="de-input-icon">
+                    <i class="bi bi-lock"></i>
+                    <input asp-for="Senha" class="de-input form-control" type="password" placeholder="Mínimo 6 caracteres" />
+                </div>
+                <span asp-validation-for="Senha" class="de-validation"></span>
+            </div>
+
+            <div class="de-form-group">
+                <label asp-for="Perfil" class="de-label">Perfil</label>
+                <select asp-for="Perfil" class="de-input form-select">
+                    <option value="Pesquisador">Pesquisador</option>
+                    <option value="Administrador">Administrador</option>
+                </select>
+            </div>
+
+            <button type="submit" class="de-btn de-btn--primary w-100 mt-2">
+                <i class="bi bi-person-plus"></i> Criar Conta
+            </button>
+        </form>
+
+        <div class="de-auth-footer">
+            Já tem conta? <a asp-action="Login">Fazer login</a>
+        </div>
+    </div>
+</div>
+
+@section Scripts { @{await Html.RenderPartialAsync("_ValidationScriptsPartial");} }

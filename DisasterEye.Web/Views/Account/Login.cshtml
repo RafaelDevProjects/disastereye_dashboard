@@ -1,0 +1,59 @@
+@model DisasterEye.Web.Models.LoginViewModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = "_AuthLayout";
+}
+
+<div class="de-auth-page">
+    <div class="de-auth-bg"><div class="de-star-field"></div></div>
+    <div class="de-auth-card">
+        <div class="de-auth-logo">
+            <i class="bi bi-broadcast"></i>
+            <div class="de-brand-title">DisasterEye</div>
+            <div class="de-brand-sub">Space Monitoring System</div>
+        </div>
+
+        @if (TempData["Sucesso"] != null)
+        {
+            <div class="de-alert de-alert-success mb-3">
+                <i class="bi bi-check-circle-fill"></i> @TempData["Sucesso"]
+            </div>
+        }
+
+        <form asp-action="Login" method="post">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="de-alert de-alert-danger mb-3"></div>
+
+            <div class="de-form-group">
+                <label asp-for="Email" class="de-label">E-mail</label>
+                <div class="de-input-icon">
+                    <i class="bi bi-envelope"></i>
+                    <input asp-for="Email" class="de-input form-control" placeholder="seu@email.com" autocomplete="email" />
+                </div>
+                <span asp-validation-for="Email" class="de-validation"></span>
+            </div>
+
+            <div class="de-form-group">
+                <label asp-for="Senha" class="de-label">Senha</label>
+                <div class="de-input-icon">
+                    <i class="bi bi-lock"></i>
+                    <input asp-for="Senha" class="de-input form-control" type="password" placeholder="••••••••" autocomplete="current-password" />
+                </div>
+                <span asp-validation-for="Senha" class="de-validation"></span>
+            </div>
+
+            <button type="submit" class="de-btn de-btn--primary w-100 mt-2">
+                <i class="bi bi-box-arrow-in-right"></i> Entrar no Sistema
+            </button>
+        </form>
+
+        <div class="de-auth-footer">
+            Não tem conta? <a asp-action="Register">Cadastre-se</a>
+        </div>
+        <div class="de-auth-hint">
+            <small>Admin padrão: <strong>admin@disastereye.com</strong> / <strong>Admin@123</strong></small>
+        </div>
+    </div>
+</div>
+
+@section Scripts { @{await Html.RenderPartialAsync("_ValidationScriptsPartial");} }
