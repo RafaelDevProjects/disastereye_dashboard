@@ -1,0 +1,20 @@
+================================================================
+DisasterEye — Global Solution · FIAP 2025
+Disciplina: C# Development · Turma: 3ESPR
+Professor: Wellington Cidade Silva
+================================================================
+
+TEMA: DisasterEye — Monitoramento de Desastres Naturais
+via Tecnologias Derivadas da Exploração Espacial (NASA EONET API)
+
+EQUIPE:
+----------------------------------------------------------------
+Nome: [SEU NOME COMPLETO]     RM: [SEU RM]
+Nome: [INTEGRANTE 2]          RM: [RM 2]
+Nome: [INTEGRANTE 3]          RM: [RM 3]
+Nome: [INTEGRANTE 4]          RM: [RM 4]
+Nome: [INTEGRANTE 5]          RM: [RM 5]
+----------------------------------------------------------------
+
+Repositório: https://github.com/[usuario]/DisasterEye
+================================================================
