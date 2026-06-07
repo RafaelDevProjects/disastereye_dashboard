@@ -1,0 +1,84 @@
+@model DisasterEye.Web.Models.TecnologiaViewModel
+@{
+    ViewData["Title"] = Model.Nome;
+}
+
+<div class="de-page-header">
+    <h2 class="de-page-title"><i class="bi bi-info-circle"></i> Detalhes</h2>
+    <div class="d-flex gap-2">
+        @if (User.FindFirst("Perfil")?.Value == "Administrador")
+        {
+            <a asp-action="Edit" asp-route-id="@Model.Id" class="de-btn de-btn--secondary">
+                <i class="bi bi-pencil"></i> Editar
+            </a>
+        }
+        <a asp-action="Index" class="de-btn de-btn--ghost"><i class="bi bi-arrow-left"></i> Voltar</a>
+    </div>
+</div>
+
+<div class="de-grid-two">
+    <div class="de-panel">
+        <div class="de-panel-header"><i class="bi bi-cpu"></i> Informações</div>
+        <div class="de-panel-body">
+            <div class="de-detail-row">
+                <span class="de-detail-label">Nome</span>
+                <span class="de-detail-value">@Model.Nome</span>
+            </div>
+            <div class="de-detail-row">
+                <span class="de-detail-label">Descrição</span>
+                <span class="de-detail-value">@Model.Descricao</span>
+            </div>
+            <div class="de-detail-row">
+                <span class="de-detail-label">Origem Espacial</span>
+                <span class="de-detail-value"><span class="de-badge de-badge--blue">@Model.OrigemEspacial</span></span>
+            </div>
+            <div class="de-detail-row">
+                <span class="de-detail-label">Categoria</span>
+                <span class="de-detail-value">@Model.CategoriaNome</span>
+            </div>
+            <div class="de-detail-row">
+                <span class="de-detail-label">Status</span>
+                <span class="de-detail-value">
+                    <span class="de-status de-status--@Model.Status.ToLower()">@Model.Status</span>
+                </span>
+            </div>
+            <div class="de-detail-row">
+                <span class="de-detail-label">Data de Cadastro</span>
+                <span class="de-detail-value">@Model.DataCadastro.ToString("dd/MM/yyyy HH:mm")</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="de-panel">
+        <div class="de-panel-header"><i class="bi bi-geo-alt"></i> Coordenadas do Satélite</div>
+        <div class="de-panel-body">
+            @if (Model.Latitude.HasValue && Model.Longitude.HasValue)
+            {
+                <div class="de-coords-display">
+                    <div class="de-coord-box">
+                        <i class="bi bi-arrow-up-down"></i>
+                        <div class="de-coord-label">Latitude</div>
+                        <div class="de-coord-val">@Model.Latitude?.ToString("F6")°</div>
+                    </div>
+                    <div class="de-coord-box">
+                        <i class="bi bi-arrow-left-right"></i>
+                        <div class="de-coord-label">Longitude</div>
+                        <div class="de-coord-val">@Model.Longitude?.ToString("F6")°</div>
+                    </div>
+                </div>
+                <div class="de-map-placeholder">
+                    <i class="bi bi-map fs-1"></i>
+                    <p class="mt-2 mb-3">Lat: @Model.Latitude / Lon: @Model.Longitude</p>
+                    <a href="https://maps.google.com/?q=@Model.Latitude,@Model.Longitude"
+                       target="_blank" class="de-btn de-btn--primary">
+                        <i class="bi bi-box-arrow-up-right"></i> Abrir no Google Maps
+                    </a>
+                </div>
+            }
+            else
+            {
+                <div class="de-empty">Coordenadas não informadas.</div>
+            }
+        </div>
+    </div>
+</div>

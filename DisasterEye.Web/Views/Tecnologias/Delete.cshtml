@@ -1,0 +1,38 @@
+@model DisasterEye.Web.Models.TecnologiaViewModel
+@{
+    ViewData["Title"] = "Confirmar Exclusão";
+}
+
+<div class="de-page-header">
+    <h2 class="de-page-title"><i class="bi bi-trash text-danger"></i> Confirmar Exclusão</h2>
+    <a asp-action="Index" class="de-btn de-btn--ghost"><i class="bi bi-arrow-left"></i> Voltar</a>
+</div>
+
+<div class="de-panel" style="max-width:600px">
+    <div class="de-panel-header de-panel-header--danger">
+        <i class="bi bi-exclamation-triangle"></i> Atenção — esta ação é irreversível
+    </div>
+    <div class="de-panel-body">
+        <p class="mb-3">Você está prestes a excluir permanentemente:</p>
+        <div class="de-detail-row">
+            <span class="de-detail-label">Nome</span>
+            <span class="de-detail-value"><strong>@Model.Nome</strong></span>
+        </div>
+        <div class="de-detail-row">
+            <span class="de-detail-label">Origem Espacial</span>
+            <span class="de-detail-value">@Model.OrigemEspacial</span>
+        </div>
+        <div class="de-detail-row">
+            <span class="de-detail-label">Categoria</span>
+            <span class="de-detail-value">@Model.CategoriaNome</span>
+        </div>
+
+        <form asp-action="Delete" asp-route-id="@Model.Id" method="post" class="mt-4 d-flex gap-2">
+            @Html.AntiForgeryToken()
+            <button type="submit" class="de-btn de-btn--danger">
+                <i class="bi bi-trash"></i> Confirmar Exclusão
+            </button>
+            <a asp-action="Index" class="de-btn de-btn--ghost">Cancelar</a>
+        </form>
+    </div>
+</div>

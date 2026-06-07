@@ -1,0 +1,94 @@
+@model List<DisasterEye.Web.Models.TecnologiaViewModel>
+@{
+    ViewData["Title"] = "Tecnologias Espaciais";
+}
+
+<div class="de-page-header">
+    <div>
+        <h2 class="de-page-title"><i class="bi bi-radar"></i> Tecnologias Espaciais</h2>
+        <p class="de-page-sub">Monitoramento via satélite de desastres naturais ao redor do mundo.</p>
+    </div>
+    @if (User.FindFirst("Perfil")?.Value == "Administrador")
+    {
+        <a asp-action="Create" class="de-btn de-btn--primary">
+            <i class="bi bi-plus-lg"></i> Nova Tecnologia
+        </a>
+    }
+</div>
+
+<div class="de-panel">
+    <div class="de-panel-body p-0">
+        <div class="table-responsive">
+            <table class="de-table table mb-0">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Nome</th>
+                        <th>Origem Espacial</th>
+                        <th>Categoria</th>
+                        <th>Coordenadas</th>
+                        <th>Status</th>
+                        <th>Data</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var t in Model)
+                        {
+                            <tr>
+                                <td class="de-id">@t.Id</td>
+                                <td>
+                                    <strong>@t.Nome</strong>
+                                    <div class="de-table-sub">
+                                        @(t.Descricao.Length > 60 ? t.Descricao[..60] + "…" : t.Descricao)
+                                    </div>
+                                </td>
+                                <td><span class="de-badge de-badge--blue">@t.OrigemEspacial</span></td>
+                                <td>@t.CategoriaNome</td>
+                                <td>
+                                    @if (t.Latitude.HasValue && t.Longitude.HasValue)
+                                    {
+                                        <span class="de-coords">
+                                            <i class="bi bi-geo-alt"></i>
+                                            @t.Latitude?.ToString("F2"), @t.Longitude?.ToString("F2")
+                                        </span>
+                                    }
+                                    else { <span class="de-empty-cell">—</span> }
+                                </td>
+                                <td><span class="de-status de-status--@t.Status.ToLower()">@t.Status</span></td>
+                                <td>@t.DataCadastro.ToString("dd/MM/yyyy")</td>
+                                <td>
+                                    <div class="de-actions">
+                                        <a asp-action="Details" asp-route-id="@t.Id" class="de-icon-btn" title="Detalhes">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        @if (User.FindFirst("Perfil")?.Value == "Administrador")
+                                        {
+                                            <a asp-action="Edit" asp-route-id="@t.Id" class="de-icon-btn de-icon-btn--edit" title="Editar">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
+                                            <a asp-action="Delete" asp-route-id="@t.Id" class="de-icon-btn de-icon-btn--danger" title="Excluir">
+                                                <i class="bi bi-trash"></i>
+                                            </a>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="8" class="text-center de-empty py-5">
+                                <i class="bi bi-satellite fs-1 d-block mb-2"></i>
+                                Nenhuma tecnologia cadastrada.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -24,7 +24,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DisasterEye.AppHost")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+4f6ce020bb6b9afc6f60bdc5ab40a47fa5a488f5")]
 [assembly: System.Reflection.AssemblyProductAttribute("DisasterEye.AppHost")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DisasterEye.AppHost")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

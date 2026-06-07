@@ -1,0 +1,63 @@
+# ── Build & Output ───────────────────────────────────────────────
+bin/
+obj/
+out/
+
+# ── Visual Studio ────────────────────────────────────────────────
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.userprefs
+
+# ── .NET ─────────────────────────────────────────────────────────
+*.dll
+*.exe
+*.pdb
+*.cache
+*.log
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# ── NuGet ────────────────────────────────────────────────────────
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+!**/packages/build/
+nuget.config
+
+# ── Secrets & Configurações sensíveis ───────────────────────────
+appsettings.Development.json
+appsettings.Production.json
+secrets.json
+*.pfx
+*.p12
+
+# ── Aspire ───────────────────────────────────────────────────────
+.aspiresession/
+
+# ── Logs ─────────────────────────────────────────────────────────
+logs/
+*.log
+*.txt.log
+
+# ── Sistema Operacional ──────────────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ── Rider / JetBrains ────────────────────────────────────────────
+.idea/
+*.sln.iml
+
+# ── VS Code ──────────────────────────────────────────────────────
+.vscode/
+
+# ── Cobertura de Testes ──────────────────────────────────────────
+coverage/
+*.coverage
+*.coveragexml
+TestResults/
