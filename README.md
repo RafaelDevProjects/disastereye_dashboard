@@ -127,17 +127,9 @@ Swagger: `http://localhost:5001/swagger`
 
 ---
 
-## Commits Semânticos Sugeridos
+## Participantes
 
-```
-feat: estrutura inicial do projeto com .NET Aspire e Oracle
-feat: modelos de domínio (Tecnologia, CategoriaImpacto, Usuario)
-feat: AppDbContext com EF Core Oracle e seed inicial
-feat: padrão Repository com interfaces (ITecnologiaRepository, IUsuarioRepository)
-feat: endpoints CRUD da API de tecnologias
-feat: endpoint stats para dashboard (/api/tecnologias/stats)
-feat: autenticação BCrypt no UsuarioRepository
-feat: autenticação por cookies com claims no Web MVC
-feat: dashboard com cards, barras de progresso e gráfico Chart.js
-feat: controle de acesso por perfil via Claims (Administrador/Pesquisador)
-```
+Giovanna Franco Gaudino Rodrigues RM553701 
+Rafael de Almeida Sigoli RM554019 
+Rafael Jorge Del Padre RM552765
+ 
